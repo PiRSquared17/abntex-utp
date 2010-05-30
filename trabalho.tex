@@ -1,0 +1,65 @@
+%% vim:ft=tex
+\documentclass[font=plain,chapter=TITLE,section=Title,espaco=duplo,tocpage=plain,appendix=Name,floatnumber=continuous]{abnt}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage[alf]{abntcite}
+\usepackage{graphicx}
+
+%% xunxo para seguir as normas da UTP
+\usepackage{xunxos-utp}
+
+%% informações sobre o trabalho
+\autor{Nicolai Nicolaiev}
+\coautor{Fulano Fulanowsky}
+\titulo{Um exemplo de trabalho em \LaTeX{}}
+\comentario{Trabalho de Conclusão de Curso apresentado ao Curso de Bacharelado
+em Ciência da Computação, da Faculdade de Ciências Exatas da Universidade
+Tuiuti do Paraná, como requisito parcial para a obtenção do grau de Bacharel em
+Ciência da Computação.}
+\instituicao{Universidade Tuiuti do Paraná}
+\orientador[Orientador: ]{Parararan Parararanavam}
+\local{Curitiba}
+\data{2010}
+
+\begin{document}
+\input{xunxos-utp-doc.tex}
+
+\UTPCapa
+\UTPFalsaFolhaDeRosto
+\UTPFolhaDeRosto
+
+\begin{resumo}
+TODO: Resumo.
+
+Palavras-chave: TODO; TODO
+\end{resumo}
+
+\listoffigures
+\listoftables
+\listadequadros
+\sumario
+
+\chapter{Introdução}
+
+TODO: Introdução
+
+\chapter{Revisão da Literatura}
+
+TODO: Revisão da literatura.
+
+\chapter{Metodologia de desenvolvimento}
+
+TODO: Metodologia.
+
+\chapter{Conclusão}
+
+TODO: Conclusão.
+
+\chapter{Considerações Finais}
+
+TODO: Considerações Finais.
+
+\bibliography{biblio}
+
+\end{document}

@@ -1,0 +1,391 @@
+%% xunxos-utp.sty
+%% Copyright 2010 Bogdano Arendartchuk <bhdn@ukr.net>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Bogdano Arendartchuk.
+%
+% This work consists of the files xunxos-utp.sty and xunxos-utp-doc.tex.
+%
+\NeedsTeXFormat{LaTeX2e}
+
+\usepackage[small]{caption}
+\usepackage[a4paper,vmargin={3.0cm,2.0cm},hmargin={3.0cm,2.0cm}]{geometry}
+
+% Este pacote é utilizado explicidamente aqui pois se a opção font=times
+% for utilizada com o abntex, ele vai carregar também os pacotes de fontes
+% para o modo matemático, que certamente são mais feias que as Computer
+% Modern que vêm por padrão com as distribuições latex
+\usepackage{times}
+
+\renewcommand*\familydefault{\sfdefault}
+
+\setlength{\parindent}{1.5cm}
+
+\setcounter{tocdepth}{5}
+
+\renewenvironment{resumo}%
+  {%
+   \if@openright\cleardoublepage\else\clearpage\fi%
+   \setchaptertype{resumo}
+   \pretextualchapter{\resumoname}%
+   \setlength{\parindent}{0cm}%
+   \begin{espacosimples}%
+  }%
+  {\end{espacosimples}\newpage}%abstract
+
+\newcommand{\tmpoldtoc}[1]{}
+\let\tmpoldtoc=\@starttoc
+\renewcommand{\@starttoc}[1]{%
+\begin{espacosimples}
+\tmpoldtoc{#1}
+\end{espacosimples}}
+
+\newcommand{\listadequadros}{%
+  \ifthenelse{\boolean{@twocolumn}}%
+    {\setboolean{ABNTrestorecol}{true}\onecolumn}%
+    {\setboolean{ABNTrestorecol}{false}}%
+  \setchaptertype{listadequadros}
+  \pretextualchapter{LISTA DE QUADROS}
+  \@starttoc{qdr}%
+  \ifthenelse{\boolean{ABNTrestorecol}}{\twocolumn}{}%
+}%
+\newcounter{quadro}
+\setcounter{quadro}{0}
+\newcommand{\ext@quadro}{qdr}
+\newcommand{\quadro}[1]{%
+	\captionsetup{type=quadro,name=QUADRO}%FIXME só funciona em TEXLIVE
+	\caption[#1]{#1}
+}
+\newcommand{\l@quadro}{\l@figure}
+
+\newcommand{\fonte}[1]{\small{FONTE: #1}}
+
+\newcommand{\figinfo}[2]{%
+\centering
+\par
+\captionsetup{format=plain}
+\caption{#1}
+\fonte{#2}
+}
+
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{2.3em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{0em}{3.2em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{0em}{4.1em}}
+\renewcommand*\l@paragraph{\@dottedtocline{4}{0em}{5em}}
+\renewcommand*\l@subparagraph{\@dottedtocline{5}{0em}{6em}}
+
+%Altera o espa�mento entre dots
+\renewcommand\@dotsep{2}
+
+% Defining how is typeset the \chapter
+\def\@makechapterhead#1{%
+  {%
+  \noindent
+  \espaco{simples}
+  \textbf{\thechapter\hspace{1ex}\MakeUppercase{#1}}
+  \par
+  }%
+}
+
+% Defining how is typeset the \chapter*
+\def\@makeschapterhead#1{%
+  {%
+  \espaco{simples}
+  \centering
+  \textbf{\MakeUppercase{#1}}
+  \par
+  }%
+  \vspace{\baselineskip}
+}
+
+\renewcommand\section{\ABNTstartsection{section}{1}{\z@}%
+                           {-3.5ex \@plus -1ex \@minus -.2ex}%
+                           {0.3ex \@plus.2ex}%
+                           {\espaco{simples}\normalfont%
+                            \ABNTsectionfont\ABNTsectionfontsize}}
+
+\newcommand{\tmpoldsection}[1]{}
+\let\tmpoldsection=\section
+\renewcommand{\section}[1]{%
+\tmpoldsection{\uppercase{#1}}}
+
+\renewcommand\subsection{\ABNTstartsection{subsection}{2}{\z@}%
+                           {-3.25ex\@plus -1ex \@minus -.2ex}%
+                           {0.5ex \@plus .2ex}%
+                           {\espaco{simples}\normalfont%
+                            \ABNTsubsectionfont\ABNTsubsectionfontsize}}
+\renewcommand\subsubsection{\ABNTstartsection{subsubsection}{3}{\z@}%
+                           {-3.25ex\@plus -1ex \@minus -.2ex}%
+                           {0.5ex \@plus .2ex}%
+                           {\espaco{simples}\normalfont%
+                            \ABNTsubsubsectionfont\ABNTsubsubsectionfontsize}}
+\renewcommand\paragraph{\ABNTstartsection{paragraph}{4}{\z@}%
+                           {0.25ex \@plus1ex \@minus.2ex}%
+                           {-1em}%
+                           {\espaco{simples}\normalfont%
+                            \ABNTparagraphfont\ABNTparagraphfontsize}}
+\renewcommand\subparagraph{\ABNTstartsection{subparagraph}{5}{\parindent}%
+                           {0.25ex \@plus1ex \@minus .2ex}%
+                           {-1em}%
+                           {\espaco{simples}\normalfont%
+                            \ABNTsubparagraphfont\ABNTsubparagraphfontsize}}
+
+% \@chapter :
+\def\@chapter[#1]#2%
+      {\ifthenelse{\boolean{ABNThypertoc}}{\renewcommand{\theHchapter}{\chaptertype\thechapter}}{}
+       \ifnum \c@secnumdepth >\m@ne %report.cls
+         \refstepcounter{chapter}   %report.cls
+         \ABNTchaptermark{#1}% This command MUST come before addcontentsline
+         \typeout{\@chapapp\space\thechapter.}%report.cls
+         \ifthenelse{\boolean{ABNTaftertoc}}
+           {\ABNTaddcontentsline{toc}{chapter}{\protect\numberline{\thechapter}\uppercase{#1}}}%true
+           {}%false
+       \else%report.cls
+         \ABNTchaptermark{#1}% This command MUST come before addcontentsline
+         \ifthenelse{\boolean{ABNTaftertoc}}%
+           {\ABNTaddcontentsline{toc}{chapter}{#1}}%true
+           {}%false
+       \fi%end of ifnum
+       %%%begin report.cls
+       \if@twocolumn
+         \@topnewpage[\@makechapterhead{#2}]%
+       \else
+         \@makechapterhead{#2}%
+         \@afterheading
+       \fi
+       \par}
+
+\renewcommand\chapter%
+    {%
+     \if@openright\cleardoublepage\else\clearpage\fi%
+     \thispagestyle{\chaptertitlepagestyle}
+     \ifthenelse{\boolean{ABNTinpretext}}%
+       {%
+        \ifthenelse{\boolean{ABNTaftertoc}}%
+          {% change to textual part
+           \setboolean{ABNTinpretext}{false}%
+           \ABNTBeginOfTextualPart%
+          }%
+          {}%
+       }%
+       {}%
+     \global\@topnum\z@%
+     \@afterindentfalse%
+%     \ABNTsecdef\@chapter\@schapter%
+    \secdef\@chapter\@schapter%
+    }%
+
+\def\ABNTsect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3\relax\@svsec}%
+          \interlinepenalty \@M
+          \ifnum #2>1
+ 		#8
+          \else
+		\MakeUppercase{#8}
+          \fi
+         \@@par}%
+    \endgroup
+    \@ifundefined{ABNT#1mark}{}{\csname ABNT#1mark\endcsname{#7}}
+    \ABNTaddcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec \ifthenelse{\boolean{ABNTcapsec}}
+             {\MakeUppercase{#8}}{#8}}%
+      \@ifundefined{ABNT#1mark}{}{\csname ABNT#1mark\endcsname{#7}}
+      \ABNTaddcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+
+\renewcommand\l@chapter[2]{
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \ifthenelse{\boolean{ABNTpagenumstyle}}
+        {\renewcommand{\@pnumwidth}{3.5em}}
+        {}
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \normalsize\ABNTtocchapterfont
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\dotfill \nobreak%
+      \ifthenelse{\boolean{ABNTpagenumstyle}}
+         {%
+          \hb@xt@\@pnumwidth{\hss
+            \ifthenelse{\not\equal{#2}{}}{{\normalfont p.\thinspace#2}}{}}\par
+         }
+         {%
+          \hb@xt@\@pnumwidth{\hss #2}\par
+         }
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+
+\sloppy
+
+\newcommand\nomesumario{Sumário}
+
+% ====  \tableofcontents  ====
+% do exactly what old \tableofcontents used to do, but had to be redefined
+% since \chapter* (used in \tableofcontents' old definition) was redefined.
+\renewcommand{\tableofcontents}{%
+  \ifthenelse{\boolean{@twocolumn}}%
+    {\setboolean{ABNTrestorecol}{true}\onecolumn}%
+    {\setboolean{ABNTrestorecol}{false}}%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \thispagestyle{\chaptertitlepagestyle}
+  \global\@topnum\z@
+  \@afterindentfalse
+  \@makeschapterhead{\large{\nomesumario}}%
+  \@afterheading
+  \@mkboth{\nomesumario}{\nomesumario}
+  \@starttoc{toc}%
+  \ifthenelse{\boolean{ABNTrestorecol}}{\twocolumn}{}%
+  \if@openright\cleardoublepage\else\clearpage\fi%
+  \setboolean{ABNTaftertoc}{true}
+}%
+
+\let\sumario\tableofcontents\relax
+
+%\renewcommand{\sumario}{%
+%  \ifthenelse{\boolean{@twocolumn}}%
+%    {\setboolean{ABNTrestorecol}{true}\onecolumn}%
+%    {\setboolean{ABNTrestorecol}{false}}%
+%  \if@openright\cleardoublepage\else\clearpage\fi
+%  \thispagestyle{\chaptertitlepagestyle}
+%  \global\@topnum\z@
+%  \@afterindentfalse
+%  \@makeschapterhead{\contentsname}%
+%  \@afterheading
+%  \@mkboth{\contentsname}{\contentsname}
+%  \@starttoc{toc}%
+%  \ifthenelse{\boolean{ABNTrestorecol}}{\twocolumn}{}%
+%  \if@openright\cleardoublepage\else\clearpage\fi%
+%  \setboolean{ABNTaftertoc}{true}
+%}%
+%
+%\renewcommand{\ABNTaddcontentsline}[3]
+%  {\ifthenelse{\boolean{ABNTNextOutOfTOC}}
+%     {\setboolean{ABNTNextOutOfTOC}{false}}
+%     {\addcontentsline{#1}{#2}{#3}}}
+
+\renewcommand{\ABNTbibliographyname}{REFERÊNCIAS}
+
+%% niveis de secao que devem ter numeracao
+
+\setcounter{secnumdepth}{3}
+
+\renewcommand{\ABNTchapterfont}{\bfseries}
+\renewcommand{\ABNTchaptersize}{\normalsize}
+
+%%\renewcommand{\ABNTtocchapterfont}{\bfseries}
+%%\renewcommand{\ABNTtocchaptersize}{\normalsize}
+
+%%\setboolean{ABNTcapchap}{true}
+%%\setboolean{ABNTcapsec}{true}
+
+\renewcommand{\ABNTsectionfontsize}{\normalsize}
+\renewcommand{\ABNTsectionfont}{\normalfont}
+
+\renewcommand{\ABNTsubsectionfontsize}{\normalsize}
+\renewcommand{\ABNTsubsectionfont}{\normalfont}
+
+\renewcommand{\ABNTsubsubsectionfontsize}{\normalsize}
+\renewcommand{\ABNTsubsubsectionfont}{\normalfont}
+
+\providecommand{\ABNTcoautordata}{}
+\newcommand{\coautor}[1]{\renewcommand{\ABNTcoautordata}{#1}}
+
+\newcommand{\UTPCapa}{
+\begin{titlepage}
+ \begin{espacosimples}
+ \vfill
+ \begin{center}
+   {\large\bfseries\MakeUppercase{\ABNTinstituicaodata}} \\[.2cm]
+   {\large\bfseries {\ABNTautordata}} \\[.2cm]
+   \ABNTifnotempty{\ABNTcoautordata}%
+   {%
+     {\large\bfseries {\ABNTcoautordata}}
+   }
+   \\[8.5cm]
+   {\large\bfseries\MakeUppercase{\ABNTtitulodata}}\\[1cm]
+   \vfill
+   \MakeUppercase{\ABNTlocaldata}\\
+   \ABNTdatadata
+ \end{center}
+ \end{espacosimples}
+\end{titlepage}
+}
+
+\newcommand{\UTPFalsaFolhaDeRosto}{
+\begin{titlepage}
+ \begin{espacosimples}
+ \vspace*{10cm}
+ \begin{center}
+   {\large\bfseries\MakeUppercase{\ABNTtitulodata}} \\
+   \vfill
+   \ABNTlocaldata\\
+   \ABNTdatadata
+ \end{center}
+ \end{espacosimples}
+\end{titlepage}
+}
+
+\newcommand{\UTPFolhaDeRosto}{
+  \begin{titlepage}
+  \begin{espacosimples}
+    \null
+    \begin{center}
+      {\large\bfseries\ABNTautordata}\\[.2cm]
+      \ABNTifnotempty{\ABNTcoautordata}%
+      {%
+        {\large\bfseries{\ABNTcoautordata}}\\
+      }
+      \vspace{6cm}
+      {\large \textbf{\MakeUppercase\@title}}\\
+      \vspace{4cm}
+
+      \hfill{\parbox{8cm}{\small\ABNTcomentariodata \\
+      \ABNTorientadorname\ABNTorientadordata}}\par  \null\vfill
+      \MakeUppercase\ABNTlocaldata\\
+      \ABNTdatadata
+    \end{center}
+  \end{espacosimples}
+  \end{titlepage}
+  \setcounter{footnote}{0}
+}
+
+\newcommand{\nohyphens}{\hyphenpenalty=10000\exhyphenpenalty=10000\relax}
+
+\makeatletter
+
