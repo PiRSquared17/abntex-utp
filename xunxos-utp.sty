@@ -69,7 +69,17 @@
 
 \newcommand{\fonte}[1]{\small{FONTE: #1}}
 
-\newcommand{\figinfo}[2]{%
+% figinfop (note o "p"), para figuras de autoria própria
+\newcommand{\figinfo}[1]{%
+\centering
+\par
+\captionsetup{format=plain}
+\caption{#1}
+}
+
+% figinfo (sem "p") para figuras que precisam de uma linha com
+% FONTE: blabla
+\newcommand{\figinfofonte}[2]{%
 \centering
 \par
 \captionsetup{format=plain}
