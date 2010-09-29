@@ -1,4 +1,13 @@
-%% vim:ft=tex
+%
+% exemplo.tex - Exemplo de uso do template abntex-utp.
+%
+% Note que o arquivo em que você deve editar seu trabalho é "trabalho.tex".
+% É lá que você deve editar o texto do seu trabalho. Use este arquivo como
+% referência de como implementar equações, tabelas quadros e referências.
+%
+% As referências bibliográficas (referenciadas com \ref{NOME}), ficam no
+% arquivo "biblio.bib".
+%
 \documentclass[font=plain,chapter=TITLE,section=Title,espaco=duplo,tocpage=plain,appendix=Name,floatnumber=continuous]{abnt}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
@@ -25,6 +34,9 @@ Ciência da Computação.}
 \begin{document}
 \input{xunxos-utp-doc.tex}
 
+%
+% comandos para gerar capas
+%
 \UTPCapa
 \UTPFalsaFolhaDeRosto
 \UTPFolhaDeRosto
@@ -39,10 +51,23 @@ bibliográficas.
 Palavras-chave: fermento; sal; açúcar; linhaça
 \end{resumo}
 
+%
+% comandos para gerar lista de figuras, lista de tabelas, lista de quadros.
+% Caso não hajam tabelas, quadros ou figuras é só apagar a respectiva
+% linha.
+%
 \listoffigures
 \listoftables
 \listadequadros
 \sumario
+
+%
+% Agora sim, começa o conteúdo propriamente dito.
+%
+% Os tópicos de nível maior são feitos com o comando \chapter{}, os de
+% nível menor são feitos com \section{}, e os de menor ainda são com
+% \subsection{}. Você pode usar até \subsubsection{}.
+%
 
 \chapter{Introdução}
 
@@ -61,6 +86,31 @@ a ressaltar a relatividade das formas de ação.
 
 \chapter{Revisão da Literatura}
 
+%
+% Alguns exemplos de citação. \cite{} cria uma citação na forma
+% (SOBRENOME, ANO).
+%
+% \citeonline cria uma citação direta, que fica na forma
+% Sobrenome (ANO)
+%
+% Esses textos como "joachims1998text" são a chave da citação, estas chaves
+% são definidas em biblio.bib, por exemplo:
+%
+%    @conference{joachims1998text,
+%    	title={{Text categorization with support vector machines: learning with many relevant features}},
+%    	author={Joachims, T. and Nedellec, C. and Rouveirol, C.},
+%    	booktitle={Machine Learning: ECML-98 10th European Conference on Machine Learning},
+%    	pages={137--142},
+%    	year={1998},
+%    	address={Chemnitz, Alemanha},
+%    	organization={Springer}
+%    }
+%
+% Estas informações (title, author, pages, year, etc) são usadas para gerar
+% a entrada na página de referências. Essa página é gerada automaticamente
+% e só as referências que você citou com \cite{} ou \citeonline{} são
+% realmente utilizadas.
+%
 Segundo~\cite{joachims1998text}, a natureza do aprendizado estatístico não
 deve-se apenas aos problemas da humanidade.
 
@@ -68,6 +118,13 @@ Segundo o sempre sábio \citeonline{umExemploDeCitacaoUsandoPaginasWeb},
 alguma coisa disso pode ser verdade.
 
 Porém, segundo~\cite{vapnik2000nature}, nada disso é verdade.
+
+Além disso, é importante ter tópicos:
+\begin{itemize}
+  \item este é um item;
+  \item este é outro; e
+  \item este é mais um.
+\end{itemize}
 
 Pensando mais a longo prazo, a expansão dos mercados mundiais pode nos
 levar a considerar a reestruturação de todos os recursos funcionais
@@ -81,6 +138,17 @@ situações atípicas decorrentes dos modos de operação convencionais. A níve
 organizacional, a competitividade nas transações comerciais exige a
 precisão e a definição de alternativas às soluções ortodoxas.
 
+E também é importante definir alguns passos:
+\begin{enumerate}
+  \item Nascer,
+  \item Crescer, e
+  \item Morrer.
+\end{enumerate}
+
+%
+% Agora um exemplo de uma equação. Há exemplos em
+% http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%
 E em imagens, porém,~\cite{semolini2002support} afirma que generalização
 para duas dimensões para uma matriz $p$ de tamanho $n \times n$:
 \begin{equation}
@@ -90,6 +158,10 @@ G_{ij} = \frac{1}{\sqrt{2n}} C_i C_j \sum_{x=0}^{n-1} \sum_{y=0}^{n-1}
 \label{eq:dct_duas}
 \end{equation}
 
+%
+% Um exemplo de uma seção. Uma seção fica abaixo de um capítulo, então sua
+% numeração sempre é 1.1, 1.2, 3.3, etc.
+%
 \section{Este é o título desta seção}
 
 Caros amigos, o comprometimento entre as ontologias apresenta tendências no
@@ -108,6 +180,15 @@ mostra que a indeterminação contínua de distintas formas de fenômeno
 garante a contribuição de um grupo importante na determinação das novas
 teorias propostas.
 
+%
+% Um exemplo de figura no texto.
+%
+% Para alterar o tamanho dela, mude o "0.5" para outro valor. É uma escala
+% de >0 a 1 em relação à largura da página.
+%
+% Recomendo que use arquivos .PNG "bem grandes", para garantir que fique
+% bom.
+%
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{img/eagle.jpg}
@@ -144,28 +225,48 @@ C & No & 3 \\
 \hline
 \end{tabular}
 \caption{Uma super tabela}
-\label{tab:seila}
+\label{tab:seila} % veja a descrição abaixo
 \end{table}
 
-De acordo com as idéias de Deleuze como na tabela ~\ref{tab:seila}, a crescente
-influência da mídia acarreta um processo de reformulação e modernização das
-diversas correntes de pensamento.  Como afirmou Deleuze, o Übermensch de
-Nietzsche, ou seja, o Super-Homem, exige a precisão e a definição das ciências
-discursivas.  Pode-se argumentar, como Bachelard fizera, que a teoria de Fliess
-é uma das consequências do processo de comunicação como um todo.
+%
+% Note esse \ref{} no parágrafo abaixo. São referências cruzadas. Cada
+% tabela, quadro, imagem vai ganhar um número. Para saber qual o número é
+% usado esse comando \ref{}, assim no texto final ficaria "na tabela 10, a
+% crescente".
+%
+% Se você precisa indicar em qual página estará algum elemento, você pode
+% usar o comando \pageref{}, assim, poderia ficar "na tabela da página 4"
+%
+% Esses objetos ganham a numeração usando o comando \label{PREFIXO:NOME}.
+% PREFIXO é o que indica o tipo do objeto, tab para tablea, fig para
+% figura, quadro para quadro e sec pra seções ou capítulos (\section{} ou
+% \chapter{}).
+% NOME é qualquer apelido que você quiser dar para o objeto.
+%
+De acordo com as idéias de Deleuze como apresentado na tabela \ref{tab:seila},
+a crescente influência da mídia acarreta um processo de
+reformulação e modernização das diversas correntes de pensamento.  Como
+afirmou Deleuze, o Übermensch de Nietzsche, ou seja, o Super-Homem, exige a
+precisão e a definição das ciências discursivas.  Pode-se argumentar, como
+Bachelard fizera, que a teoria de Fliess é uma das consequências do
+processo de comunicação como um todo. Como descrito na tabela da
+página \pageref{tab:seila}.
 
+%
+% Um exemplo de uma tabela
+%
 \begin{table}[h!b!p!]
 \centering
-\begin{tabular}{lll}
+\begin{tabular}{lll} % cada l indica uma coluna na tabela
+\hline % significa uma linha horizontal
+Alphabet Character & Vowel & Number \\ % essas \\ indicam uma linha nova
 \hline
-Alphabet Character & Vowel & Number \\
-\hline
-A & Yes & 1 \\
+A & Yes & 1 \\ % cada & indica a separação de uma coluna
 B & No & 2 \\
 C & No & 3 \\
 \hline
 \end{tabular}
-\quadro{Eita}
+\quadro{Eita} % aqui deve ficar uma descrição do quadro
 \label{quadro:outrola}
 \end{table}
 
@@ -291,3 +392,4 @@ mesmos”.
 \bibliography{biblio}
 
 \end{document}
+%% vim:ft=tex
