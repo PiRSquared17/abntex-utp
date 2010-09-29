@@ -1,0 +1,4 @@
+Leia as instruções em http://abntex-utp.googlecode.com/
+
+Veja exemplo.tex para ver exemplos de como inserir fórmulas, referências,
+figuras, tabelas.
