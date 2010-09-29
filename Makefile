@@ -9,4 +9,4 @@ apresentacao.pdf: apresentacao.tex
 
 .PHONY: clean
 clean:
-	rm -f *.aux *.log *.lof *.loc *.lot *.qdr *.out *.blg *.bbl *.pdf
+	rm -f *.aux *.log *.lof *.loc *.lot *.qdr *.out *.blg *.bbl *.pdf *.toc *.nav *.snm
