@@ -20,6 +20,9 @@
 \usepackage[small]{caption}
 \usepackage[a4paper,vmargin={3.0cm,2.0cm},hmargin={3.0cm,2.0cm}]{geometry}
 
+% continous numbering
+\usepackage{chngcntr}
+
 % Este pacote é utilizado explicidamente aqui pois se a opção font=times
 % for utilizada com o abntex, ele vai carregar também os pacotes de fontes
 % para o modo matemático, que certamente são mais feias que as Computer
@@ -69,22 +72,24 @@
 
 \newcommand{\fonte}[1]{\small{FONTE: #1}}
 
-% figinfop (note o "p"), para figuras de autoria própria
-\newcommand{\figinfo}[1]{%
-\centering
-\par
-\captionsetup{format=plain}
-\caption{#1}
-}
-
-% figinfo (sem "p") para figuras que precisam de uma linha com
-% FONTE: blabla
-\newcommand{\figinfofonte}[2]{%
+\newcommand{\figinfox}[2]{%
 \centering
 \par
 \captionsetup{format=plain}
 \caption{#1}
 \fonte{#2}
+}
+
+\newcommand{\figinfo}[1]{%
+\centering
+\par
+\captionsetup{format=plain}
+\caption{#1}
+%% depois de muita discussão, ficou claro que as figuras de autoria
+% própria não precisam dessa anotação estranha, mas fica aqui 
+% anotado, para caso um dia uma certa professora reapareça na
+% utp
+%%\fonte{autoria própria}
 }
 
 \makeatletter
@@ -284,6 +289,9 @@
   \if@openright\cleardoublepage\else\clearpage\fi%
   \setboolean{ABNTaftertoc}{true}
 }%
+
+
+\renewcommand{\theequation}{\arabic{equation}}
 
 \let\sumario\tableofcontents\relax
 
